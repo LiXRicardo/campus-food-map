@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import { MapPin, Star, Heart } from 'lucide-react'
+import { MapPin, Star, Heart, Users } from 'lucide-react'
 import { Restaurant } from '../types'
 import { useStore } from '../store/useStore'
 import { formatDistance } from '../utils/distance'
 import { getBusinessStatus } from '../utils/businessHours'
+import { getServicesByRestaurant } from '../data/queueService'
 
 interface Props {
   restaurant: Restaurant
@@ -15,6 +16,7 @@ export default function RestaurantCard({ restaurant: r, compact }: Props) {
   const { isFavorite, toggleFavorite } = useStore()
   const fav = isFavorite(r.id)
   const status = getBusinessStatus(r.businessHours)
+  const waitingCount = getServicesByRestaurant(r.id).filter(q => q.status === 'waiting').length
 
   return (
     <div
@@ -63,7 +65,15 @@ export default function RestaurantCard({ restaurant: r, compact }: Props) {
                 {tag}
               </span>
             ))}
-            <span className={`text-[10px] ml-auto ${status.color}`}>{status.text.split('·')[0]}</span>
+            <span className="flex items-center gap-1 ml-auto">
+              {waitingCount > 0 && (
+                <span className="text-[10px] text-orange-600 flex items-center gap-0.5">
+                  <Users size={10} />
+                  {waitingCount}人排队
+                </span>
+              )}
+              <span className={`text-[10px] ${status.color}`}>{status.text.split('·')[0]}</span>
+            </span>
           </div>
         </div>
       </div>
