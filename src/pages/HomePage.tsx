@@ -209,7 +209,9 @@ export default function HomePage() {
       <div className="px-4 mt-6">
         <h2 className="font-bold text-base mb-3">最新评价</h2>
         <div className="space-y-3">
-          {latestReviews.map(rev => (
+          {latestReviews.map(rev => {
+            const restaurant = restaurants.find(r => r.id === rev.restaurantId)
+            return (
             <div
               key={rev.id}
               className="bg-white rounded-xl p-3 shadow-sm"
@@ -217,8 +219,12 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-2">
                 <img src={rev.userAvatar} alt="" className="w-8 h-8 rounded-full bg-gray-100" />
-                <div>
-                  <p className="text-xs font-medium">{rev.userName}</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <p className="text-xs font-medium">{rev.userName}</p>
+                    <span className="text-[10px] text-gray-300">评价了</span>
+                    <span className="text-[10px] text-primary-500 font-medium truncate">{restaurant?.name}</span>
+                  </div>
                   <StarRating rating={rev.rating} size={10} />
                 </div>
               </div>
@@ -227,7 +233,8 @@ export default function HomePage() {
                 <img src={rev.images[0]} alt="" className="w-16 h-16 rounded-lg mt-2 object-cover" />
               )}
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
