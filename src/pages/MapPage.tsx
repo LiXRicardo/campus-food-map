@@ -33,9 +33,10 @@ export default function MapPage() {
     )
     mapInstance.current = map
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
-      maxZoom: 19,
+    L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+      attribution: '&copy; 高德地图',
+      maxZoom: 18,
+      subdomains: '1234',
     }).addTo(map)
 
     restaurants.forEach(r => {
