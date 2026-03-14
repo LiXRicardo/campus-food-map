@@ -165,6 +165,17 @@ export default function RestaurantDetailPage() {
           <span className="text-gray-600">{r.phone}</span>
         </div>
         <div className="flex items-center gap-2 text-xs">
+          <Users size={14} className={waitingServices.length > 0 ? 'text-orange-500 flex-shrink-0' : 'text-gray-400 flex-shrink-0'} />
+          {waitingServices.length > 0 ? (
+            <span className="text-orange-600 flex items-center gap-1.5">
+              排队中 · {waitingServices.length}人等待 · 约{waitingServices[0]?.estimatedWait || 0}分钟
+              <span className="text-[10px] px-1 py-0.5 bg-orange-100 text-orange-600 rounded animate-pulse leading-none">LIVE</span>
+            </span>
+          ) : (
+            <span className="text-green-600">无需排队</span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 text-xs">
           <Clock size={14} className="text-gray-400 flex-shrink-0" />
           <span className={status.color}>{status.text}</span>
         </div>
